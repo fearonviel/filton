@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Filton{% endblock title %}
+
+{% block content %}
+
+        <div id="nav">
+            <span><a class="my-button" href="/messages">See messages</a></span>
+            <span><a class="my-button" href="{{logout_url }}">Log out</a></span>
+        </div>
+
+        <br>
+
+        <p>
+            {% for message in messages %}
+                <hr>
+                <br>
+                <p>Author: <a class="name" href="/message/{{ message.key.id() }}">{{ message.name }}</a></p>
+                <p class="email"> Email: {{ message.email }}</p>
+                <br>
+                <p class="date"> Date: {{ message.date }}</p>
+                <br>
+                <p class="messages"> {{ message.message }}</p>
+                <br>
+                <p class="grade"> Grade: {{ message.grade }}</p>
+                <br>
+            {% endfor %}
+        </p>
+
+{% endblock content %}

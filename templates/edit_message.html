@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Filton{% endblock title %}
+
+{% block content %}
+
+        <div id="nav">
+            <span><a class="my-button" href="/messages">Back</a></span>
+        </div>
+
+        <div>
+            <form action="/message/{{ message.key.id() }}/edit" method="post">
+                <table>
+                    <tr>
+                        <td>
+                            <p>Name:</p>
+                        </td>
+                        <td>
+                            <input name="name" value="{{ message.name }}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Message:</p>
+                        </td>
+                        <td>
+                            <textarea rows="10" cols="50" name="message"> {{ message.message }}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>How would you grade our hotel (1-5)?</p>
+                        </td>
+                        <td>
+                            <input name="grade" value="{{ message.grade }}">
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <div class="buttons">
+                    <button class="my-button" type="submit">Submit message</button>
+                </div>
+            </form>
+        </div>
+
+
+{% endblock content %}

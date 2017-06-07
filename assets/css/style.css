@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#navbar {
+    height: 100%;
+    margin: 0px;
+    border-bottom: 3px solid black;
+    color: black;
+    text-align: center;
+    font-size: 300%;
+    padding: 30px;
+    font-family: 'Alex Brush', cursive;
+}
+
+#content {
+    border: 2px solid black;
+    width: 800px;
+    margin: auto;
+    padding: 30px;
+    margin-top: 50px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 120%;
+}
+
+.email {
+    font-size: 90%;
+}
+
+.date {
+    font-size: 80%;
+    color: grey;
+}
+
+.grade {
+    font-size: 90%;
+    font-weight: bold;
+    color: #1075e5;
+}
+
+.messages {
+    text-align: justify;
+}
+
+#nav {
+    clear: left;
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    color: grey;
+    text-decoration:none;
+    cursor:pointer;
+}
+
+.buttons {
+    margin-top: 50px;
+    clear: left;
+    text-align: center;
+}
+
+.greeting {
+    text-align: center;
+}
+
+.my-button {
+      font-size: 90%;
+      border-radius: 0;
+      background-color: white;
+      border: 1px solid black;
+      margin: 0 20px;
+      padding: 10px 20px;
+      font-weight: bold;
+}
+
+.my-button:hover {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+td {
+    padding: 8px;
+}
+
+input {
+    line-height: 1.8;
+}

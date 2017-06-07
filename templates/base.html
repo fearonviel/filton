@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title>{% block title %}{% endblock title %}</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/assets/css/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Alex+Brush|Open+Sans" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <div id="navbar">
+            <p><a id="homelink" href="/">Filton hotel</a></p>
+        </div>
+
+        <div id="content">
+
+            {% block content %}{% endblock content %}
+
+        </div>
+
+    </body>
+</html>

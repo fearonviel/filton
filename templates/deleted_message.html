@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Filton{% endblock title %}
+
+{% block content %}
+
+        <div id="nav">
+            <span><a class="my-button" href="/messages">See messages</a></span>
+            <span><a class="my-button" href="{{logout_url }}">Log out</a></span>
+        </div>
+
+        <br>
+
+        <p>
+            <p>Author: <a class="name" href="/message/{{ message.key.id() }}">{{ message.name }}</a></p>
+            <p class="email"> Email: {{ message.email }}</p>
+            <br>
+            <p class="date"> Date: {{ message.date.strftime('%d. %m. %Y, %H:%M') }}</p>
+            <br>
+            <p class="messages"> {{ message.message }}</p>
+            <br>
+            <p class="grade"> Grade: {{ message.grade }}</p>
+            <br>
+        </p>
+
+        <span><a href="/message/{{ message.key.id() }}/restoremessage">Restore this message</a></span><br>
+        <span><a href="/message/{{ message.key.id() }}/permanentdelete">Permanently delete this message</a></span>
+
+{% endblock content %}

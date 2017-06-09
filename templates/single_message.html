@@ -17,7 +17,7 @@
             <p>Author: <a class="name" href="/message/{{ message.key.id() }}">{{ message.name }}</a></p>
             <p class="email"> Email: {{ message.email }}</p>
             <br>
-            <p class="date"> Date: {{ message.date }}</p>
+            <p class="date"> Date: {{ message.date.strftime('%d. %m. %Y, %H:%M') }}</p>
             <br>
             <p class="messages"> {{ message.message }}</p>
             <br>

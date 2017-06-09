@@ -78,8 +78,7 @@ class MessagesHandler(BaseHandler):
     def get(self):
 
         messages = Message.query(Message.deleted == False).order(-Message.date).fetch()
-        logout_url = users.create_logout_url('/')
-        params = {"messages": messages, "logout_url": logout_url}
+        params = {"messages": messages}
 
         return self.render_template("messages.html", params=params)
 
@@ -87,8 +86,7 @@ class MessagesHandler(BaseHandler):
 class SingleMessageHandler(BaseHandler):
     def get(self, message_id):
         message = Message.get_by_id(int(message_id))
-        logout_url = users.create_logout_url('/')
-        params = {"message": message, "logout_url": logout_url}
+        params = {"message": message}
         return self.render_template("single_message.html", params=params)
 
 
@@ -102,9 +100,6 @@ class EditMessageHandler(BaseHandler):
         newmessage = cgi.escape(self.request.get("message"))
         name = cgi.escape(self.request.get("name"))
         grade = cgi.escape(self.request.get("grade"))
-
-        if not grade:
-            grade = "no grade was given"
 
         message = Message.get_by_id(int(message_id))
         message.message = newmessage
@@ -130,13 +125,43 @@ class DeleteMessageHandler(BaseHandler):
 
 class DeletedMessagesHandler(BaseHandler):
     def get(self):
-
         messages = Message.query(Message.deleted == True).order(-Message.date).fetch()
-        logout_url = users.create_logout_url('/')
-        params = {"messages": messages, "logout_url": logout_url}
+        params = {"messages": messages}
 
         return self.render_template("deleted_messages.html", params=params)
 
+
+class DeletedMessageHandler(BaseHandler):
+    def get(self, message_id):
+        message = Message.get_by_id(int(message_id))
+        params = {"message": message}
+        return self.render_template("deleted_message.html", params=params)
+
+
+class PermanentDeleteHandler(BaseHandler):
+    def get(self, message_id):
+        message = Message.get_by_id(int(message_id))
+        params = {"message": message}
+        return self.render_template("permanent_delete.html", params=params)
+
+    def post(self, message_id):
+        message = Message.get_by_id(int(message_id))
+        message.key.delete()
+        return self.redirect_to("messages")
+
+
+class RestoreMessageHandler(BaseHandler):
+    def get(self, message_id):
+        message = Message.get_by_id(int(message_id))
+        params = {"message": message}
+        return self.render_template("restore_message.html", params=params)
+
+    def post(self, message_id):
+        message = Message.get_by_id(int(message_id))
+        message.deleted = False
+        message.put()
+
+        return self.redirect_to("messages")
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
@@ -146,5 +171,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/message/<message_id:\d+>', SingleMessageHandler),
     webapp2.Route('/message/<message_id:\d+>/edit', EditMessageHandler),
     webapp2.Route('/message/<message_id:\d+>/delete', DeleteMessageHandler),
-    webapp2.Route('/deletedmessages', DeletedMessagesHandler)
+    webapp2.Route('/deletedmessages', DeletedMessagesHandler),
+    webapp2.Route('/message/<message_id:\d+>/permanentdelete', PermanentDeleteHandler),
+    webapp2.Route('/message/<message_id:\d+>/restoremessage', RestoreMessageHandler),
+    webapp2.Route('/message/<message_id:\d+>/deletedmessage', DeletedMessageHandler),
 ], debug=True)

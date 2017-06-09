@@ -1,10 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Filton{% endblock title %}
+
+{% block content %}
+
+        <div id="nav">
+            <span><a class="my-button" href="/message/{{ message.key.id() }}/edit">Edit message</a></span>
+            <span><a class="my-button" href="/messages">See messages</a></span>
+            <span><a class="my-button" href="/newmessage">New message</a></span>
+            <span><a class="my-button" href="{{logout_url }}">Log out</a></span>
+        </div>
+
+
+        <br>
+        <p>
+            <p>Author: <a class="name" href="/message/{{ message.key.id() }}">{{ message.name }}</a></p>
+            <p class="email"> Email: {{ message.email }}</p>
+            <br>
+            <p class="date"> Date: {{ message.date.strftime('%d. %m. %Y, %H:%M') }}</p>
+            <br>
+            <p class="messages"> {{ message.message }}</p>
+            <br>
+            <p class="grade"> Grade: {{ message.grade }}</p>
+            <br>
+        </p>
+
+        <br>
+
+        <h3 class="greeting">
+            <p>Do you really want to restore this message?</p>
+        </h3>
+
+<div class="buttons">
+            <form action="/message/{{ message.key.id() }}/restoremessage" method="post">
+                <button class="my-button" type="submit">Yes</button>
+            </form>
+        </div>
+
+{% endblock content %}

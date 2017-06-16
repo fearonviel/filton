@@ -4,6 +4,19 @@
 
 {% block content %}
 
+        <script>
+            $(document).ready(function(){
+
+                $(".deletemessage").hide();
+
+                // Deleting an Individual Service
+                $(".message").hover( function() {
+                    $(this).find(".deletemessage").show();
+                });
+
+            });
+        </script>
+
         <div id="nav">
             <span><a class="my-button" href="/newmessage">New message</a></span>
             <span><a class="my-button" href="/deletedmessages">Deleted messages</a></span>
@@ -14,18 +27,78 @@
 
         <p>
             {% for message in messages %}
-                <hr>
-                <br>
-                <p>Author: <a class="name" href="/message/{{ message.key.id() }}">{{ message.name }}</a></p>
-                <p class="email"> By: {{ message.email }}</p>
-                <br>
-                <p class="date"> Date: {{ message.date.strftime('%d. %m. %Y, %H:%M') }}</p>
-                <br>
-                <p class="messages">{{ message.message }}</p>
-                <br>
-                <p class="grade"> Grade: {{ message.grade }}</p>
-                <br>
+                <div class="message">
+                    <hr>
+                    <button type="button" class="deleteButton my-button" onclick="deleteMessage('/message/{{ message.key.id() }}/delete', myFunction)">X</button>
+                        <!--<form action="/message/{{ message.key.id() }}/delete" method="post">-->
+                            <!--<button class="my-button" type="submit">X</button>-->
+                        <!--</form>-->
+                    <br>
+                    <p>Author: <a class="name" href="/message/{{ message.key.id() }}">{{ message.name }}</a></p>
+                    <p class="email"> By: {{ message.email }}</p>
+                    <br>
+                    <p class="date"> Date: {{ message.date.strftime('%d. %m. %Y, %H:%M') }}</p>
+                    <br>
+                    <p class="messages">{{ message.message }}</p>
+                    <br>
+                    <p class="grade"> Grade: {{ message.grade }}</p>
+                    <br>
+                </div>
+
             {% endfor %}
         </p>
 
 {% endblock content %}
+
+{% block scripts %}
+
+    <!--SHOWS DELETE BUTTON ON HOVER-->
+    <script>
+
+        $(document).ready(function(){
+            $('.deleteButton').hide()
+
+            $('.message').hover(
+            function(){  //this is fired when the mouse hovers over
+                $(this).find('.deleteButton').show();
+            },
+            function(){  //this is fired when the mouse hovers out
+                 $(this).find('.deleteButton').hide();
+            });
+
+        });
+
+
+    </script>
+
+    <!--SLIDES MESSAGES UP-->
+    <script>
+
+        $(".deleteButton").click(function(){
+            $(this).parent().delay(500).slideUp();
+        });
+
+    </script>
+
+    <!--DELETES MESSAGE-->
+
+    <script>
+        function deleteMessage(url, cFunction) {
+          var xhttp;
+          xhttp=new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              cFunction(this);
+            }
+          };
+          xhttp.open("POST", url, true);
+          xhttp.send();
+        }
+
+        function myFunction(xhttp) {
+          alert("Delete successful!");
+        }
+
+    </script>
+
+{% endblock scripts %}

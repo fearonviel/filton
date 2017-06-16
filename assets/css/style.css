@@ -24,8 +24,11 @@
 }
 
 .name {
-    font-weight: bold;
     font-size: 120%;
+}
+
+.message:hover .name {
+    font-weight: bold;
 }
 
 .email {
@@ -87,6 +90,7 @@ a:hover {
 .my-button:hover {
     background-color: #1e1e1e;
     color: white;
+    cursor:pointer;
 }
 
 td {
@@ -95,4 +99,11 @@ td {
 
 input {
     line-height: 1.8;
+}
+
+
+.deleteButton {
+    float:right;
+    margin-right: 15px;
+    margin-top: 15px;
 }

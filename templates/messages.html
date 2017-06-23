@@ -17,7 +17,8 @@
             {% for message in messages %}
                 <div class="message">
                     <hr>
-                    <button type="button" class="deleteButton my-button" onclick="deleteMessage('/message/{{ message.key.id() }}/delete', myFunction)">X</button>
+                    <button type="button" class="deleteButton my-button">X</button>
+                    <!--<button type="button" class="deleteButton my-button" onclick="deleteMessage('/message/{{ message.key.id() }}/delete-with-ajax', myFunction)">X</button>-->
                         <!--<form action="/message/{{ message.key.id() }}/delete" method="post">-->
                             <!--<button class="my-button" type="submit">X</button>-->
                         <!--</form>-->
@@ -56,37 +57,59 @@
 
         });
 
+        $(document).ready(function(){
+            $(".deleteButton").click(function(){
 
-    </script>
+                var myUrl = $ (this).parent().find(".name").attr("href")+"/delete-with-ajax";
 
-    <!--SLIDES MESSAGES UP-->
-    <script>
+                <!--$.post (myUrl, function(result) {-->
+                    <!--alert(result);-->
+                    <!--console.log(result);-->
+                <!--});-->
 
-        $(".deleteButton").click(function(){
-            $(this).parent().delay(500).slideUp();
+                $(this).parent().delay(500).slideUp();
+
+                $.ajax({
+                    url: myUrl,
+                    type: "POST",
+                    success: function(result) {
+                        if (result == 1) {
+                            alert("Delete successful");
+                            console.log(result);
+                        } else {
+                            alert("Something went wrong.");
+                            console.log(result);
+                        }
+                    }
+                });
+                return false;
+            });
         });
 
     </script>
 
+
     <!--DELETES MESSAGE-->
 
-    <script>
-        function deleteMessage(url, cFunction) {
-          var xhttp;
-          xhttp=new XMLHttpRequest();
-          xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-              cFunction(this);
-            }
-          };
-          xhttp.open("POST", url, true);
-          xhttp.send();
-        }
+    <!--<script>-->
+        <!--function deleteMessage(url, cFunction) {-->
+          <!--var xhttp;-->
+          <!--xhttp=new XMLHttpRequest();-->
+          <!--xhttp.onreadystatechange = function() {-->
+            <!--if (this.readyState == 4 && this.status == 200) {-->
+              <!--cFunction(this);-->
+            <!--}-->
+          <!--};-->
+          <!--xhttp.open("POST", url, true);-->
+          <!--xhttp.send();-->
+        <!--}-->
 
-        function myFunction(xhttp) {
-          alert("Delete successful!");
-        }
+        <!--function myFunction(xhttp) {-->
+            <!--alert("Message deleted.");-->
+        <!--}-->
 
-    </script>
+
+
+    <!--</script>-->
 
 {% endblock scripts %}

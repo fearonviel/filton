@@ -163,6 +163,21 @@ class RestoreMessageHandler(BaseHandler):
 
         return self.redirect_to("messages")
 
+
+class AjaxDeleteMessageHandler(BaseHandler):
+    def post(self, message_id):
+        message = Message.get_by_id(int(message_id))
+        message.deleted = True
+        message.put()
+
+        if message.deleted:
+            success = 1
+        else:
+            success = 0
+
+        return self.write(success)
+
+
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
     webapp2.Route('/messages', MessagesHandler, name="messages"),
@@ -175,4 +190,5 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/message/<message_id:\d+>/permanentdelete', PermanentDeleteHandler),
     webapp2.Route('/message/<message_id:\d+>/restoremessage', RestoreMessageHandler),
     webapp2.Route('/message/<message_id:\d+>/deletedmessage', DeletedMessageHandler),
+    webapp2.Route('/message/<message_id:\d+>/delete-with-ajax', AjaxDeleteMessageHandler),
 ], debug=True)

@@ -58,22 +58,18 @@
         });
 
         $(document).ready(function(){
-            $(".deleteButton").click(function(){
+            $(".deleteButton").click(function(e){
 
                 var myUrl = $ (this).parent().find(".name").attr("href")+"/delete-with-ajax";
-
-                <!--$.post (myUrl, function(result) {-->
-                    <!--alert(result);-->
-                    <!--console.log(result);-->
-                <!--});-->
-
-                $(this).parent().delay(500).slideUp();
+                <!--var target = $(this);-->
 
                 $.ajax({
                     url: myUrl,
                     type: "POST",
                     success: function(result) {
                         if (result == 1) {
+                            <!--target.parent().delay(500).slideUp();-->
+                            $(e.target).parent().delay(500).slideUp();
                             alert("Delete successful");
                             console.log(result);
                         } else {
